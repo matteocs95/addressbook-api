@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SuperRubricaRestServiceApplication {
+public class AddressBookRestServiceApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(SuperRubricaRestServiceApplication.class, args);
+		SpringApplication.run(AddressBookRestServiceApplication.class, args);
 	}
 }
