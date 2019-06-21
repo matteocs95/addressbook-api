@@ -1,6 +1,7 @@
 package com.matteo.app.controllers;
 
 import com.matteo.app.domain.Contact;
+import com.matteo.app.error.exceptions.ContactNotFoundException;
 import com.matteo.app.services.ContactService;
 import com.matteo.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -25,7 +27,6 @@ public class ContactController {
         return contactService.getByUser(user.getUsername());
     }
 
-
     @GetMapping("/all")
     public Iterable<Contact> getAll() {
         return contactService.getList();
@@ -34,7 +35,7 @@ public class ContactController {
     @GetMapping("/{id}")
     public Contact getById(@PathVariable("id") Integer id) {
         return contactService.getById(id)
-                .orElse(null);
+                .orElseThrow(()-> new ContactNotFoundException(id));
     }
 
     @PostMapping
@@ -51,6 +52,7 @@ public class ContactController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
+
         contactService.delete(id);
     }
 

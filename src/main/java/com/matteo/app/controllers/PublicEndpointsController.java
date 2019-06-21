@@ -5,9 +5,7 @@ import com.matteo.app.services.UserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
@@ -30,15 +28,13 @@ public class PublicEndpointsController {
         }
     }
 
+
     @PostMapping("/login")
     public Object login(
             @RequestParam("email") String email,
             @RequestParam("password") String password) {
-        try {
+
             return authenticationService
                     .login(email, password);
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(UNAUTHORIZED).body(e.getMessage());
-        }
     }
 }

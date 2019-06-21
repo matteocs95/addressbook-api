@@ -2,8 +2,6 @@ package com.matteo.app.domain;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
