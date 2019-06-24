@@ -1,5 +1,6 @@
 package com.matteo.app.configuration;
 
+import com.matteo.app.error.CustomRestExceptionHandler;
 import com.matteo.app.security.NoRedirectStrategy;
 import com.matteo.app.security.TokenAuthenticationFilter;
 import com.matteo.app.security.TokenAuthenticationProvider;
@@ -23,12 +24,14 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher("/register"),
             new AntPathRequestMatcher("/login")
@@ -98,8 +101,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return registration;
     }
 
+
     @Bean
     AuthenticationEntryPoint forbiddenEntryPoint() {
-        return new HttpStatusEntryPoint(FORBIDDEN);
+        return new HttpStatusEntryPoint(UNAUTHORIZED);
     }
 }

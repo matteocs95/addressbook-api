@@ -5,6 +5,7 @@ import com.matteo.app.error.exceptions.ContactNotFoundException;
 import com.matteo.app.services.ContactService;
 import com.matteo.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +53,12 @@ public class ContactController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
+        try {
+            contactService.delete(id);
+        }catch (EmptyResultDataAccessException ex){
+            throw new ContactNotFoundException(id);
+        }
 
-        contactService.delete(id);
     }
 
 }
